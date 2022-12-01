@@ -1,27 +1,29 @@
 {
+  "ts-node": {
+    "files": true
+  },
   "compilerOptions": {
-    "target": "es5",
+    "experimentalDecorators": true,
     "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es2016",
+    "moduleResolution": "node",
     "outDir": "./dist",
-    "rootDir": "./",
-    "strict": true,
     "baseUrl": "./",
+    "rootDir": "./",
+    "typeRoots": [
+      "./src/interfaces",
+      "node_modules/@types"
+    ],
+    "downlevelIteration": true,
     "paths": {
       "@/*": [
         "src/*"
       ]
     },
-    "typeRoots": [
-      "./src/interfaces"
-    ],
-    "esModuleInterop": true,
     "resolveJsonModule": true
   },
   "include": [
-    "./src/**/*",
-    ".eslintrc.json"
-  ],
-  "ts-node": {
-    "files": true
-  },
+    "src/**/*"
+  ]
 }
