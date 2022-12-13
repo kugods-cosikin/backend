@@ -1,7 +1,5 @@
 /* eslint-disable indent */
-import {
-  BaseEntity, Column, Entity, Index, PrimaryGeneratedColumn,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Index('profile_guest_name_index', ['name'])
 @Index('profile_guest_username_index', ['username'])
@@ -29,10 +27,10 @@ class ProfileGuest extends BaseEntity {
   @Column('tinyint', { name: 'is_deleted' })
   isDeleted: boolean;
 
-  @Column('timestamp', { name: 'updated_at', default: 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  @Column('timestamp', { name: 'updated_at', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   updatedAt: object;
 
-  @Column('timestamp', { name: 'created_at', default: 'CURRENT_TIMESTAMP' })
+  @Column('timestamp', { name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: object;
 }
 
