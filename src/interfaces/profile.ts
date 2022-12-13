@@ -7,6 +7,11 @@ export interface profileDto {
   stack: string[];
 }
 
+export interface profileDetailDto extends Omit<profileDto, 'type'> {
+  id: number;
+  isHost: boolean;
+  isOwner: boolean;
+}
 export interface fileDto {
   path: string;
 }
