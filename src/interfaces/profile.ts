@@ -12,6 +12,8 @@ export interface profileDetailDto extends Omit<profileDto, 'type'> {
   isHost: boolean;
   isOwner: boolean;
   email: string;
+  userId: number;
+  isDeleted: boolean;
 }
 export interface fileDto {
   path: string;

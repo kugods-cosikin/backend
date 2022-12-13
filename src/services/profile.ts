@@ -70,6 +70,8 @@ export const view = async (req: Request) => {
     github: '',
     stack: [],
     email: '',
+    userId: 0,
+    isDeleted: false,
   };
 
   try {
