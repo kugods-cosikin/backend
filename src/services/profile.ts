@@ -6,6 +6,7 @@ import { fileDto, profileDetailDto, profileDto } from '@/interfaces/profile';
 import AppDataSource from '@/config/app-data-source';
 import { nextTick } from 'process';
 import { profile } from 'console';
+import User from '@/entities/user';
 
 export const create = async (req: Request, profileData: profileDto, fileData: fileDto) => {
   const { name, username, bio, type, github, stack } = profileData;
@@ -68,17 +69,40 @@ export const view = async (req: Request) => {
     bio: '',
     github: '',
     stack: [],
+    email: '',
   };
 
   try {
     const profileGuestObj = await AppDataSource.getRepository(ProfileGuest)
       .createQueryBuilder('profile_guest')
       .where('profile_guest.id = :id', { id: req.params.id })
+      .select([
+        'profile_guest.id',
+        'profile_guest.name',
+        'profile_guest.username',
+        'profile_guest.bio',
+        'profile_guest.image',
+        'profile_guest.userId',
+        'profile_guest.isDeleted',
+      ])
+      .getOneOrFail();
+
+    if (profileGuestObj.isDeleted) {
+      const error = new Error('This user is deleted');
+      (error as any).status = 400;
+      throw error;
+    }
+
+    const email = await AppDataSource.getRepository(User)
+      .createQueryBuilder('user')
+      .where('user.userId = :id', { id: profileGuestObj.userId })
+      .select(['user.email'])
       .getOneOrFail();
 
     profileDetail = {
       ...profileDetail,
       ...profileGuestObj,
+      ...email,
     };
   } catch (err) {
     const error = new Error(err.message);
