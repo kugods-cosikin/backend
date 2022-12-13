@@ -89,7 +89,7 @@ export const view = async (req: Request) => {
 
     if (profileGuestObj.isDeleted) {
       const error = new Error('This user is deleted');
-      (error as any).status = 400;
+      (error as any).status = 404;
       throw error;
     }
 
@@ -106,7 +106,7 @@ export const view = async (req: Request) => {
     };
   } catch (err) {
     const error = new Error(err.message);
-    (error as any).status = 400;
+    (error as any).status = 404;
     throw error;
   }
 
