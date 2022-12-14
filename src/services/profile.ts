@@ -144,15 +144,16 @@ export const view = async (req: Request) => {
 
   const token = req.header('access-token');
   if (token) {
-    const secret = process.env.JWT_TOKEN_SECRET;
-    const payload = jwt.verify(token, secret) as IPayload;
+    try {
+      const payload = jwt.verify(token, process.env.JWT_TOKEN_SECRET) as IPayload;
 
-    if (payload.userId === Number(profileDetail.userId)) {
-      profileDetail = {
-        ...profileDetail,
-        isOwner: true,
-      };
-    }
+      if (payload.userId === Number(profileDetail.userId)) {
+        profileDetail = {
+          ...profileDetail,
+          isOwner: true,
+        };
+      }
+    } catch (err) {}
   }
 
   return profileDetail;
