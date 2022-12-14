@@ -9,10 +9,10 @@ class Token extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Column('varchar', { name: 'accessToken', unique: true, length: 120 })
+  @Column('varchar', { name: 'accessToken', unique: true, length: 255 })
   accessToken: string;
 
-  @Column('varchar', { name: 'refreshToken', unique: true, length: 120 })
+  @Column('varchar', { name: 'refreshToken', unique: true, length: 255 })
   refreshToken: string;
 }
 

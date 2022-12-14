@@ -91,9 +91,8 @@ export const signup = async (user: userAuthDto):
       email: user.email,
       password: hashedPwd,
     })
-    .returning('userId')
     .execute();
-  const { userId } = newUser.raw as { userId: number };
+  const userId = newUser.identifiers[0].userId as number;
 
   const secret = process.env.JWT_TOKEN_SECRET;
   // create JWT access token

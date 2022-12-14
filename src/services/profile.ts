@@ -24,9 +24,8 @@ export const create = async (req: Request, profileData: profileDto, fileData: fi
       userId: req.userId,
       isDeleted: false,
     })
-    .returning('id')
     .execute();
-  const { profileGuestId } = newProfile.raw as { profileGuestId: number };
+  const profileGuestId = newProfile.identifiers[0].id as number;
 
   if (type === 'host') {
     await AppDataSource
