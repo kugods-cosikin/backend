@@ -125,7 +125,7 @@ export const view = async (req: Request) => {
     }
   };
 
-  const raiseError = (msg, status) => {
+  const raiseError = (msg: string, status: number) => {
     const error = new Error(msg);
     (error as any).status = status;
     throw error;
