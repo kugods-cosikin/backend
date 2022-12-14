@@ -4,9 +4,9 @@ import ProfileHostGithub from '@/entities/profile_host_github';
 import ProfileHostTag from '@/entities/profile_host_tag';
 import { fileDto, profileDetailDto, profileDto } from '@/interfaces/profile';
 import AppDataSource from '@/config/app-data-source';
-import { nextTick } from 'process';
-import { profile } from 'console';
+import jwt from 'jsonwebtoken';
 import User from '@/entities/user';
+import { IPayload } from '@/middlewares/jwt';
 
 export const create = async (req: Request, profileData: profileDto, fileData: fileDto) => {
   const { name, username, bio, type, github, stack } = profileData;
@@ -141,11 +141,17 @@ export const view = async (req: Request) => {
     throw error;
   }
 
-  if (req.userId === Number(req.params.id)) {
-    profileDetail = {
-      ...profileDetail,
-      isOwner: true,
-    };
+  const token = req.header('access-token');
+  if (token) {
+    const secret = process.env.JWT_TOKEN_SECRET;
+    const payload = jwt.verify(token, secret) as IPayload;
+
+    if (payload.userId === Number(profileDetail.userId)) {
+      profileDetail = {
+        ...profileDetail,
+        isOwner: true,
+      };
+    }
   }
 
   return profileDetail;
