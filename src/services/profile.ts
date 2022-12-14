@@ -59,6 +59,7 @@ export const view = async (req: Request) => {
   /*
     View Profile Detail Service
   */
+  // TODO : 평균응답시간, 좋아요, 채팅방 개수 추가
 
   let profileDetail: profileDetailDto = {
     isHost: false,
