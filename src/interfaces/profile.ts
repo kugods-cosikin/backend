@@ -1,4 +1,5 @@
 export interface profileDto {
+  profileGuestId: number;
   name: string;
   username: string;
   bio: string;
